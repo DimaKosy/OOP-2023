@@ -1,34 +1,28 @@
 package ie.tudublin;
 
-public class Cat
+public class Cat extends Animals
 {
-	String name;
-	private int Lives;
-
-	public void setName(String name)
-	{
-		this.name = name;
-		this.Lives = 9;
-	}
+	private int Lives = 9;
 	
-	public Cat()
-	{
-	}
+	public Cat(){}
 	
-	public Cat(String name)
-	{
-	}
+	public Cat(String name){}
 	
 	public void speak()
 	{
-		System.out.println("Woof");
+		System.out.println("Meow");
+	}
+	public void show(){
+		System.out.println(Lives);
 	}
 
 	public void kill(){
 		if(Lives > 0){
 			System.out.println("Ouch");
+			this.Lives--;
 			return;
 		}
 		System.out.println("Dead");
+		return;
 	}
 }

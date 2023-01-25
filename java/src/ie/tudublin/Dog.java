@@ -1,13 +1,8 @@
 package ie.tudublin;
 
-public class Dog
+public class Dog extends Animals
 {
 	String name;
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
 	
 	public Dog()
 	{
