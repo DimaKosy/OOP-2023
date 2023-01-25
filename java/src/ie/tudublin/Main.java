@@ -15,8 +15,9 @@ public class Main
 		Cat ginger = new Cat("Ginger");
 
 		for(int i = 0; i < 12; i ++){
-			ginger.kill();
+			System.out.print("Lives left: ");
 			ginger.show();
+			ginger.kill();
 		}
 		
 		Scanner sc = new Scanner(System.in);
