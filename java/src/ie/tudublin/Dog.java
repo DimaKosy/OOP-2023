@@ -3,7 +3,7 @@ package ie.tudublin;
 public class Dog
 {
 	String name;
-	
+
 	public void setName(String name)
 	{
 		this.name = name;
