@@ -14,17 +14,17 @@ public class HelloProcessing extends PApplet
 		colorMode(HSB);
 		background(0);
 
-		x1 = random(0, width);
-		x2 = random(0, width);
+		x1 = random(width/2, width/2);
+		x2 = random(width/2, width/2);
 		y1 = random(0, height);
-		y2 = random(0, height);
+		y2 = random(0, 0);
 
-		float range = 5;
+		float range = 3f;
 
-		x1dir = random(-range, range);
-		x2dir = random(-range, range);
-		y1dir = random(-range, range);
-		y2dir = random(-range, range);
+		x1dir = range;
+		x2dir = range;
+		y1dir = range;
+		y2dir = range;
 
 		smooth();
 		
