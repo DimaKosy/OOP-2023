@@ -11,31 +11,39 @@ public class HelloProcessing extends PApplet
 	}
 
 	public void setup() {
-		background(255,0,0);
-		smooth();
+		background(0,0,0);
+		//smooth();
 	}
-	int value;
 	
+	float [] mapCords = {1,1,1,1,2,2,1,1,1,2,2,2,3,3,3,4,4,4,1,1,1,2,2,1,1,1,3,3,3,1};
+	int x1,x2,y1,y2;
+	float Rot;
+	int offset = 20;
+	int WorldSize = 700;
+	//int i = 0;
+
 	public void draw() {
-		noStroke();
-		fill(255,255,0);
-		circle(width/2,height/2+30,width-30);
-		fill(0,255,255);
-		triangle(width/2, 0, 30, height-30, width-30, height-30);
-		fill(100);
-		ellipse(width/2, height/2 -30, 200, 100);
+		background(0,0,0);
+
 		fill(0);
-		circle(width/2, height/2 -30,90);
+		stroke(255);
+		strokeWeight(3);
+		//i++;
+		//i = i%mapCords.length;
+		translate(width/2, height+250);
+		Rot = (Rot +1)%360;
+		rotate(radians(-Rot));
+		for(int i = 0; i < mapCords.length; i++){
+			float 	Xstart = ( WorldSize/2 +offset*mapCords[(mapCords.length + i-1)%mapCords.length]) * cos(i*radians(360/mapCords.length)),
+					Xend = (WorldSize/2 + (offset*mapCords[i])) * cos(i*radians(360/mapCords.length)),
+					Ystart = (WorldSize/2 + offset*mapCords[(mapCords.length + i-1)%mapCords.length]) * sin(i*radians(360/mapCords.length)),
+					Yend = (WorldSize/2 + (offset*mapCords[i])) * sin(i*radians(360/mapCords.length));
 
-		int distance = 130;
-
-		if(mouseX < width/2 + distance && mouseX > width/2 - distance && mouseY < width/2 + distance && mouseY > height/2 - distance){
-			stroke(0,90,90);
-			strokeWeight(2);
-			fill(0,130,130);
-			ellipse(width/2, height/2 -30, 200, 100);
+			arc(0, 0, WorldSize + 2*offset*mapCords[i], WorldSize + 2*offset*mapCords[i], i*radians(360/mapCords.length), (i+1)*radians(360/mapCords.length));
+			line(Xstart, Ystart,Xend,Yend);
 		}
-		
+		circle(0, 0, WorldSize + 2*offset);
+		//delay(WorldSize/20);		
 	}
 	
 }
