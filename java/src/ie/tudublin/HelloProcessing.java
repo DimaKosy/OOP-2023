@@ -15,7 +15,7 @@ public class HelloProcessing extends PApplet
 		//smooth();
 	}
 	
-	float [] mapCords = {1,1,1,1,2,2,1,1,1,2,2,2,3,3,3,4,4,4,1,1,1,2,2,1,1,1,3,3,3,1};
+	float [] mapCords = {1,2,2,3,3,5,3,3,2,2,};
 	int x1,x2,y1,y2;
 	float Rot;
 	int offset = 20;
@@ -40,7 +40,7 @@ public class HelloProcessing extends PApplet
 					Yend = (WorldSize/2 + (offset*mapCords[i])) * sin(i*radians(360/mapCords.length));
 
 			arc(0, 0, WorldSize + 2*offset*mapCords[i], WorldSize + 2*offset*mapCords[i], i*radians(360/mapCords.length), (i+1)*radians(360/mapCords.length));
-			line(Xstart, Ystart,Xend,Yend);
+			//line(Xstart, Ystart,Xend,Yend);
 		}
 		circle(0, 0, WorldSize + 2*offset);
 		//delay(WorldSize/20);		

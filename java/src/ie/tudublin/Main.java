@@ -23,11 +23,7 @@ public class Main
 		penny.setName("Penny");
 		penny.speak();
 
-<<<<<<< HEAD
 		helloProcessing();
-=======
-		bugZap();
->>>>>>> 6f6e6eb80ddb255dc9be82f780a8369c17600998
 	}
 	
 }
