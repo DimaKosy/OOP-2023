@@ -12,38 +12,42 @@ public class HelloProcessing extends PApplet
 
 	public void setup() {
 		background(0,0,0);
-		//smooth();
+		smooth();
+		stroke(255,0,0);
+		strokeWeight(3);
+		noLoop();
 	}
 	
-	float [] mapCords = {1,2,2,3,3,5,3,3,2,2,};
-	int x1,x2,y1,y2;
-	float Rot;
-	int offset = 20;
-	int WorldSize = 700;
-	//int i = 0;
+	float x, y;
+	float Mstep = 1;
+	float step = 1f;
 
 	public void draw() {
-		background(0,0,0);
+		background(0);
+		println("NEW");
+		x = -width/2;
+		y = pow(x,2);
+		translate(width/2,height/2);
+		scale(1, -1);
+		for(float i = 0.0f; i <= width; i += step){
 
-		fill(0);
-		stroke(255);
-		strokeWeight(3);
-		//i++;
-		//i = i%mapCords.length;
-		translate(width/2, height+250);
-		Rot = (Rot +1)%360;
-		rotate(radians(-Rot));
-		for(int i = 0; i < mapCords.length; i++){
-			float 	Xstart = ( WorldSize/2 +offset*mapCords[(mapCords.length + i-1)%mapCords.length]) * cos(i*radians(360/mapCords.length)),
-					Xend = (WorldSize/2 + (offset*mapCords[i])) * cos(i*radians(360/mapCords.length)),
-					Ystart = (WorldSize/2 + offset*mapCords[(mapCords.length + i-1)%mapCords.length]) * sin(i*radians(360/mapCords.length)),
-					Yend = (WorldSize/2 + (offset*mapCords[i])) * sin(i*radians(360/mapCords.length));
-
-			arc(0, 0, WorldSize + 2*offset*mapCords[i], WorldSize + 2*offset*mapCords[i], i*radians(360/mapCords.length), (i+1)*radians(360/mapCords.length));
-			//line(Xstart, Ystart,Xend,Yend);
+			graph();
+			//println(x + " : " + y);
+			point(x, y);
 		}
-		circle(0, 0, WorldSize + 2*offset);
-		//delay(WorldSize/20);		
+
+		Mstep += 0.1f;
+	}
+
+	private void graph(){
+		x = x+step;
+		x%=width;
+		y = x * x;
+		y%=height;
+	}
+
+	public void mouseClicked(){
+		redraw();
 	}
 	
 }
