@@ -1,12 +1,17 @@
 package ie.tudublin;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import processing.core.PApplet;
+import processing.data.Table;
+import processing.data.TableRow;
 
 public class StarMap extends PApplet
 {
 	public void settings()
 	{
-		size(500, 500);
+		size(800,800);
 	}
 
 	public void setup() {
@@ -19,13 +24,27 @@ public class StarMap extends PApplet
 		
 	}
 
-		
-	public void draw()
-	{	
+	Set<Star> stars = new HashSet<Star>();
+	float scaler = 1f;
+
+	public void draw(){
+		background(0);	
 		strokeWeight(2);
-		stroke(0,255,0);
+		stroke(0,255,0,60);
 
 		drawGrid( 50 , width,10);	
+
+		Table table = loadTable("HabHYG15ly.csv", "header");
+		for(TableRow r:table.rows())
+ 		{
+ 			Star s = new Star(this, scaler, r);
+ 			stars.add(s);
+ 		}
+		for(Star star:stars){
+			translate(width/2, height/2);
+			star.drawStar();
+		}
+
 	}
 
 	void drawGrid(float border, float size, float amount){
