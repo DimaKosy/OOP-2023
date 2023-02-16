@@ -46,7 +46,7 @@ public class Star {
     }
 
     public void drawStar(){
-        float starSize = (absMag/4.0f);
+        float starSize = (absMag/5.0f);
         float starRing = absMag;
         //papplet.print(displayName + " : " + xG + "," + yG + "\n");
         papplet.strokeWeight(1);
