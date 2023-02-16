@@ -53,8 +53,8 @@ public class Star {
         papplet.stroke(255,255,0);
         papplet.noFill();
 
-        papplet.textAlign(papplet.LEFT);
-        papplet.text(displayName, xG,yG);
+        papplet.textAlign(papplet.LEFT, papplet.CENTER);
+        papplet.text(displayName, xG + starRing,yG);
         papplet.line(xG - starSize, yG,xG + starSize, yG);
         papplet.line(xG, yG - starSize,xG, yG + starSize);
 
@@ -64,16 +64,19 @@ public class Star {
     }
 
     public boolean GrabbedStar(){
-        papplet.print(displayName + " : " + xG + "," + yG + "\n");
+        //papplet.print(displayName + " : " + xG + "," + yG + "\n");
         float InterRing = absMag;
         if(!(papplet.mouseX > xG - InterRing && 
             papplet.mouseX < xG + InterRing &&
             papplet.mouseY > yG - InterRing &&
             papplet.mouseY < yG + InterRing )
         ){return false;}
-
-        papplet.print("F");
         return true;
+    }
+
+    public String toString(){
+        String outpString = displayName + ": " + xG + ", "+ yG + ", "+ zG;
+        return outpString;
     }
 
 }

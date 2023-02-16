@@ -22,7 +22,8 @@ public class StarMap extends PApplet
 		smooth();
 		noLoop();
 		scaler = ((width - 2*border)/((float)amount));
-		LoadStars();		
+		loadData();
+		printStars();
 	}
 
 	Set<Star> stars = new HashSet<Star>();
@@ -55,7 +56,7 @@ public class StarMap extends PApplet
 			stroke(255,0,0);
 			line(lxStart,lyStart,lxEnd,lyEnd);
 
-			text(Star1 + " -> " + Star2 + "    distance: " + (float)Math.sqrt(pow(lxStart - lxEnd,2) + pow(lyStart - lyEnd,2) + pow(lzStart - lzEnd,2)) + "  LY", 30, height - border/2);
+			text(Star1 + " -> " + Star2 + "    distance: " + (float)Math.sqrt(pow((lxStart - lxEnd)/scaler,2) + pow((lyStart - lyEnd)/scaler,2) + pow((lzStart - lzEnd)/scaler,2)) + " pc", 30, height - border/2);
 		}
 
 	}
@@ -65,7 +66,6 @@ public class StarMap extends PApplet
 		for(Star star:stars){
 			if(!star.GrabbedStar()){continue;}
 
-			print("FOUND\n");
 			DrawDistance = true;
 			Star1 = star.displayName;
 			lxStart = star.xG;
@@ -111,7 +111,7 @@ public class StarMap extends PApplet
 		}
 	}
 
-	void LoadStars(){
+	void loadData(){
         print(":::" + scaler +":::\n");
 		Table table = loadTable("HabHYG15ly.csv", "header");
 		for(TableRow r:table.rows())
@@ -120,4 +120,10 @@ public class StarMap extends PApplet
  			stars.add(s);
  		}
     }
+
+	public void printStars(){
+		for(Star star:stars){
+			print(star + "\n");
+		}
+	}
 }
