@@ -9,7 +9,7 @@ public class Star {
     float scaler;
     float offsetX;
     float offsetY;
-    boolean hab;
+    //boolean hab;
     String displayName;
     float distance;
     float xG;
@@ -19,24 +19,25 @@ public class Star {
 
     public Star(PApplet papplet,float scaler, float offsetX, float offsetY, TableRow tr){
         this(
+            //gl,bf,proper,dist,absmag,x,y,z
             papplet,
             scaler,
             offsetX,
             offsetY,
-            tr.getInt("Hab?") == 1, 
-            tr.getString("Display Name"), 
-            tr.getFloat("Distance"),
-            tr.getFloat("Xg"),
-            tr.getFloat("Yg"),
-            tr.getFloat("Zg"),
-            tr.getFloat("AbsMag")
+            //tr.getInt("Hab?") == 1, 
+            tr.getString("proper"), 
+            tr.getFloat("dist"),
+            tr.getFloat("x"),
+            tr.getFloat("y"),
+            tr.getFloat("z"),
+            tr.getFloat("absmag")
         );
     }
     
-    public Star(PApplet papplet, float scaler, float offsetX, float offsetY, boolean hab, String displayName, float distance, float xG, float yG, float zG, float absMag) {
+    public Star(PApplet papplet, float scaler, float offsetX, float offsetY, String displayName, float distance, float xG, float yG, float zG, float absMag) {
         this.papplet = papplet;
         this.scaler = scaler;
-        this.hab = hab;
+        //this.hab = hab;
         this.displayName = displayName;
         this.distance = distance;
         this.xG = scaler * xG + offsetX;
@@ -72,6 +73,11 @@ public class Star {
             papplet.mouseY < yG + InterRing )
         ){return false;}
         return true;
+    }
+
+    public float GrabbedStar_distance(){
+        float distance =  (float)Math.sqrt(Math.pow(papplet.mouseX - xG,2) + Math.pow(papplet.mouseY - yG,2));
+        return distance;
     }
 
     public String toString(){

@@ -11,7 +11,7 @@ public class StarMap extends PApplet
 {
 	public void settings()
 	{
-		size(800,800);
+		size(1000,1000);
 	}
 
 	public void setup() {
@@ -21,7 +21,7 @@ public class StarMap extends PApplet
 
 		smooth();
 		noLoop();
-		scaler = ((width - 2*border)/((float)amount));
+		scaler = ((width - 2*border)/((float)amount * 2f));
 		loadData();
 		printStars();
 	}
@@ -31,7 +31,7 @@ public class StarMap extends PApplet
 	boolean FoundStar = false;
 	String Star1, Star2;
 	float lxStart,lxEnd,lyStart,lyEnd, lzStart, lzEnd;
-	int amount = 10;
+	int amount = 25;
 	float border = 50f;
 	float scaler;
 
@@ -100,6 +100,7 @@ public class StarMap extends PApplet
 	}
 
 	void drawGrid(float Border, float size, float Lines){
+		Lines = Lines * 2f;
 		for(float i = 0; i <= Lines; i += 1){
 			float displace = Border + i * ((size - 2*Border)/(Lines));
 			
@@ -113,9 +114,13 @@ public class StarMap extends PApplet
 
 	void loadData(){
         print(":::" + scaler +":::\n");
-		Table table = loadTable("HabHYG15ly.csv", "header");
+		Table table = loadTable("STARS.csv", "header");
 		for(TableRow r:table.rows())
  		{
+			if(r.getFloat("dist") > amount || r.getString("proper").length() == 0){
+				continue;
+			}
+
  			Star s = new Star(this, scaler, width/2, height/2, r);
  			stars.add(s);
  		}
