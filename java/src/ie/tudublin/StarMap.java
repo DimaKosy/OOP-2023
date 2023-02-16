@@ -21,40 +21,103 @@ public class StarMap extends PApplet
 
 		smooth();
 		noLoop();
-		
+		scaler = ((width - 2*border)/((float)amount));
+		LoadStars();		
 	}
 
 	Set<Star> stars = new HashSet<Star>();
-	float scaler = 1f;
+	boolean DrawDistance = false;
+	boolean FoundStar = false;
+	String Star1, Star2;
+	float lxStart,lxEnd,lyStart,lyEnd, lzStart, lzEnd;
+	int amount = 10;
+	float border = 50f;
+	float scaler;
 
 	public void draw(){
 		background(0);	
 		strokeWeight(2);
 		stroke(0,255,0,60);
 
-		drawGrid( 50 , width,10);	
+		drawGrid(border , width, (float)amount);	
 
-		Table table = loadTable("HabHYG15ly.csv", "header");
-		for(TableRow r:table.rows())
- 		{
- 			Star s = new Star(this, scaler, r);
- 			stars.add(s);
- 		}
 		for(Star star:stars){
-			translate(width/2, height/2);
 			star.drawStar();
+
+		}
+		if(!FoundStar){
+			lxEnd = mouseX;
+			lyEnd = mouseY;
+		}
+
+
+		if(DrawDistance){
+			stroke(255,0,0);
+			line(lxStart,lyStart,lxEnd,lyEnd);
+
+			text(Star1 + " -> " + Star2 + "    distance: " + (float)Math.sqrt(pow(lxStart - lxEnd,2) + pow(lyStart - lyEnd,2) + pow(lzStart - lzEnd,2)) + "  LY", 30, height - border/2);
 		}
 
 	}
 
-	void drawGrid(float border, float size, float amount){
-		for(float i = 0; i <= amount; i += 1){
-			float displace = border + i * ((size - 2*border)/(amount));
-			line(border,displace, size - border, displace);
-			line(displace, border,displace, size - border);
+	public void mousePressed(){
+		FoundStar = false;
+		for(Star star:stars){
+			if(!star.GrabbedStar()){continue;}
+
+			print("FOUND\n");
+			DrawDistance = true;
+			Star1 = star.displayName;
+			lxStart = star.xG;
+			lyStart = star.yG;
+			lzStart = star.zG;
+
+			lxEnd = mouseX;
+			lyEnd = mouseY;
 			
-			text(str((int)(i - amount/2)),displace,border/2);
-			text(str((int)(i - amount/2)),border/2,displace);
+			loop();
+			return;
 		}
-	} 
+		DrawDistance = false;
+		redraw();
+	}
+
+	public void mouseReleased(){
+		for(Star star:stars){
+			if(!star.GrabbedStar()){continue;}
+			FoundStar = true;
+
+			Star2 = star.displayName;
+
+			lxEnd = star.xG;
+			lyEnd = star.yG;
+			lzEnd = star.zG;
+			redraw();
+			return;
+		}
+		DrawDistance = false;
+		redraw();
+	}
+
+	void drawGrid(float Border, float size, float Lines){
+		for(float i = 0; i <= Lines; i += 1){
+			float displace = Border + i * ((size - 2*Border)/(Lines));
+			
+			line(Border,displace, size - border, displace);
+			line(displace, Border,displace, size - border);
+			
+			text(str((int)(i - Lines/2)),displace,Border/2);
+			text(str((int)(i - Lines/2)),Border/2,displace);
+		}
+	}
+
+	void LoadStars(){
+        print(":::" + scaler +":::\n");
+		Table table = loadTable("HabHYG15ly.csv", "header");
+		for(TableRow r:table.rows())
+ 		{
+ 			Star s = new Star(this, scaler, width/2, height/2, r);
+ 			stars.add(s);
+ 		}
+    }
 }
