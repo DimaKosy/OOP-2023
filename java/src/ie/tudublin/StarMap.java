@@ -61,7 +61,7 @@ public class StarMap extends PApplet
 		if(!mousePressed){
 			noLoop();
 		}
-		print("Looping" + millis() + "\n");
+		//*debug*/print("Looping" + millis() + "\n");
 	}
 
 	public void mousePressed(){
