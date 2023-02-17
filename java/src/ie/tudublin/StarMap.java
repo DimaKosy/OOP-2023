@@ -58,7 +58,10 @@ public class StarMap extends PApplet
 
 			text(Star1 + " -> " + Star2 + "    distance: " + (float)Math.sqrt(pow((lxStart - lxEnd)/scaler,2) + pow((lyStart - lyEnd)/scaler,2) + pow((lzStart - lzEnd)/scaler,2)) + " pc", 30, height - border/2);
 		}
-
+		if(!mousePressed){
+			noLoop();
+		}
+		print("Looping" + millis() + "\n");
 	}
 
 	public void mousePressed(){
@@ -92,11 +95,9 @@ public class StarMap extends PApplet
 			lxEnd = star.xG;
 			lyEnd = star.yG;
 			lzEnd = star.zG;
-			redraw();
 			return;
 		}
 		DrawDistance = false;
-		redraw();
 	}
 
 	void drawGrid(float Border, float size, float Lines){
