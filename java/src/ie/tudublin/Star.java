@@ -1,6 +1,7 @@
 package ie.tudublin;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.data.TableRow;
 
 public class Star {
@@ -53,7 +54,7 @@ public class Star {
         papplet.stroke(255,255,0);
         papplet.noFill();
 
-        papplet.textAlign(papplet.LEFT, papplet.CENTER);
+        papplet.textAlign(PConstants.LEFT, PConstants.CENTER);
         papplet.text(displayName, xG + starRing,yG);
         papplet.line(xG - starSize, yG,xG + starSize, yG);
         papplet.line(xG, yG - starSize,xG, yG + starSize);
