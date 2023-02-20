@@ -44,6 +44,12 @@ public class Audio1 extends PApplet{
 			Avg += Math.abs(Ab.get(i));
 		}
 
-		circle(width/2,height/2,(Avg/Ab.size()) * height * 4 + 300);
+		//circle(width/2,height/2,(Avg/Ab.size()) * height * 4 + 300);
+
+		/*
+		for(int i = 0; i < Ab.size(); i ++){
+
+		}
+		*/
 	}
 }
