@@ -11,7 +11,7 @@ public class Audio1 extends PApplet{
     Minim minim;
     AudioInput Ai;
     AudioPlayer Ap;
-    AudioBuffer Ab;
+    AudioBuffer Ab, lerpBuffer;
 
 	int FrameSize = 1024;
 	float Avg = 0;
