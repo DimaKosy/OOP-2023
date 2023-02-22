@@ -11,7 +11,8 @@ public class Audio1 extends PApplet{
     Minim minim;
     AudioInput Ai;
     AudioPlayer Ap;
-    AudioBuffer Ab, lerpBuffer;
+    AudioBuffer Ab;
+	float [] lerpBuffer;
 
 	int FrameSize = 1024;
 	float Avg = 0;
@@ -27,8 +28,10 @@ public class Audio1 extends PApplet{
 		Ai = minim.getLineIn(Minim.MONO, FrameSize, 44100,16);
 
 		Ab = Ai.mix;
+		lerpBuffer = new float[Ab.size()];
 
 		smooth();
+		//noLoop();
 
 	}
 
@@ -38,10 +41,16 @@ public class Audio1 extends PApplet{
 		stroke(255);
 		noFill();
 		Avg = 0;
+
 		for(int i = 0; i < Ab.size() - 1; i++){
 			stroke(i%256,255,255);
-			line(i,height/2 + Ab.get(i)*(height/2f), (i+1)%Ab.size(), height/2 + Ab.get((i+1)%Ab.size())*(height/2f));
-			Avg += Math.abs(Ab.get(i));
+
+			lerpBuffer[i] += (Ab.get(i) - lerpBuffer[i])*0.1f;
+			lerpBuffer[i] *= height/2;
+			line(i,height/2 + lerpBuffer[i], (i+1)%Ab.size(), height/2 + lerpBuffer[(i+1)%Ab.size()]);
+
+			print(lerpBuffer[i] + " __ " + Ab.get(i) + "\n");
+			Avg += Math.abs(lerpBuffer[i]);
 		}
 
 		//circle(width/2,height/2,(Avg/Ab.size()) * height * 4 + 300);
@@ -51,5 +60,9 @@ public class Audio1 extends PApplet{
 
 		}
 		*/
+	}
+
+	public void mousePressed(){
+		redraw();
 	}
 }
