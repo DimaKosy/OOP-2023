@@ -117,7 +117,7 @@ public class StarMap extends PApplet
 		Table table = loadTable("STARS.csv", "header");
 		for(TableRow r:table.rows())
  		{
-			if(r.getFloat("dist") > amount ){//|| r.getString("proper").length() == 0){
+			if(r.getFloat("dist") > amount || r.getString("proper").length() == 0){
 				continue;
 			}
 
