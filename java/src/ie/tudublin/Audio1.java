@@ -37,7 +37,7 @@ public class Audio1 extends PApplet
 
     public void settings()
     {
-        size(1024, 800, P3D);
+        size(1024, 800);
 
         //fullScreen(P3D, SPAN);
     }
@@ -75,6 +75,7 @@ public class Audio1 extends PApplet
         for(int i = 0 ; i < ab.size() ; i ++)
         {
             sum += abs(ab.get(i));
+            ToLerp[i] = lerp(ToLerp[i], ab.get(i) * halfH,0.03f);
         }
         average= sum / (float) ab.size();
 
@@ -92,10 +93,20 @@ public class Audio1 extends PApplet
                     //float c = map(ab.get(i), -1, 1, 0, 255);
                     float c = map(i, 0, ab.size(), 0, 255);
                     stroke(c, 255, 255);
-                    ToLerp[i] = lerp(ToLerp[i], ab.get(i) * halfH,0.03f);
+                    
                     line(i, halfH + ToLerp[i], i, halfH - ToLerp[i]);                    
                 }
                 break;
+
+            case 1:
+                background(0);
+                for(int i = 0 ; i < ab.size() ; i ++){
+                    float c = map(i, 0, ab.size(), 0, 255);
+                    stroke(c, 255, 255);
+                    float f = 4.0f * ToLerp[i];
+                    line(i + f,halfH + f ,width/2 - f,i+ f);
+                }
+            break;
 
             case 2:
                 background(0);
@@ -104,7 +115,6 @@ public class Audio1 extends PApplet
                    //float c = map(ab.get(i), -1, 1, 0, 255);
                    float c = map(i, 0, ab.size(), 0, 255);
                    stroke(c, 255, 255);
-                   ToLerp[i] = lerp(ToLerp[i], ab.get(i) * halfH,0.03f);
                    line(i, (smoothedAmplitude +ToLerp[i])* 3, i, smoothedAmplitude - ToLerp[i]); 
                    line(smoothedAmplitude + ToLerp[i], i,smoothedAmplitude, i);
                    line(i, ((smoothedAmplitude + ToLerp[i])* 3)+ height, i, (smoothedAmplitude - ToLerp[i]) + height); 
@@ -128,7 +138,6 @@ public class Audio1 extends PApplet
                     //float c = map(ab.get(i), -1, 1, 0, 255);
                     float c = map(i, 0, ab.size(), 0, 255);
                     stroke(c, 255, 255);
-                    ToLerp[i] = lerp(ToLerp[i], ab.get(i) * halfH,0.03f);
                     line(i, width + smoothedAmplitude, ToLerp[i] * i, smoothedAmplitude);
                 } 
                     break;
@@ -140,7 +149,6 @@ public class Audio1 extends PApplet
                     //float c = map(ab.get(i), -1, 1, 0, 255);
                    float c = map(i, 0, ab.size(), 0, 255);
                    stroke(c, 255, 255);
-                   ToLerp[i] = lerp(ToLerp[i], ab.get(i) * halfH,0.03f);
                     line((smoothedAmplitude + ToLerp[i])+ height, i,smoothedAmplitude+ height, i+ height);
                     line((smoothedAmplitude + ToLerp[i])+ height, i+ height,smoothedAmplitude+ height, i);
                     //line((smoothedAmplitude + ToLerp[i])+ height, i+height , smoothedAmplitude+ height, i); cool flare design
