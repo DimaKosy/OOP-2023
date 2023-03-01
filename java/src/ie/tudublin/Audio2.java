@@ -38,7 +38,7 @@ public class Audio2 extends PApplet{
         fft = new FFT(width,44100);
         fftBuffer = new float [fft.specSize()];
 
-        halfH = height/2;;
+        halfH = height/2;
     }
 
     public void draw(){
@@ -67,7 +67,7 @@ public class Audio2 extends PApplet{
             stroke(map(i,0,fft.specSize(),0,256),255,255,100);
             fill(255,255,255,255);
 
-            BoxBuffer = lerp(BoxBuffer,HighestIndex,0.01f);
+            BoxBuffer = lerp(BoxBuffer,HighestIndex,0.00005f);
             rect(BoxBuffer - 10,20,20,20);
             fftBuffer[i] = lerp(fftBuffer[i],fft.getBand(i), 0.1f);
             line(i,halfH,i,halfH - halfH/4f * abs(fftBuffer[i]));
