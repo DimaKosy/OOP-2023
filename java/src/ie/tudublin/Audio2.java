@@ -130,10 +130,10 @@ public class Audio2 extends PApplet{
                 Freq -= 10f;
             break;        
             case 'd':
-                Freq += 0.1f;
+                Freq += 0.01f;
             break;
             case 'a':
-                Freq -= 0.1f;
+                Freq -= 0.01f;
             break;    
             default: break; 
         }
