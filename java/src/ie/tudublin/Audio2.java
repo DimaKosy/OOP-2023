@@ -22,6 +22,7 @@ public class Audio2 extends PApplet{
     float [] lerpedBuffer, fftBuffer;
     int HighestIndex = 0;
     float BoxBuffer;
+    PitchSpeller ps;
 
     public void settings(){
         size(1024,1024);
@@ -31,14 +32,30 @@ public class Audio2 extends PApplet{
         colorMode(HSB);
         m = new Minim(this);
 
-        Ai = m.getLineIn(Minim.MONO,width,44100,16);
-        Ab = Ai.mix;
+        if(false){
+            Ai = m.getLineIn(Minim.MONO,width,44100,16);
+            Ab = Ai.mix;
+        }
+        else{
+            Ap = m.loadFile("440.wav", 1024);
+            Ap.play();
+            Ab = Ap.mix;
+        }
+        
+
         lerpedBuffer = new float [Ab.size()];
 
         fft = new FFT(width,44100);
         fftBuffer = new float [fft.specSize()];
 
         halfH = height/2;
+
+
+        ps = new PitchSpeller();
+		//System.out.println(ps.spell(17));
+		System.out.println(ps.spell(330));
+		System.out.println(ps.spell(420));
+		System.out.println(ps.spell(1980));
     }
 
     public void draw(){
@@ -73,6 +90,8 @@ public class Audio2 extends PApplet{
             line(i,halfH,i,halfH - halfH/4f * abs(fftBuffer[i]));
         }
 
+        text(ps.spell(fft.indexToFreq(HighestIndex)),30,30);
+        //print(fft.indexToFreq(HighestIndex) + "\n");
     }
 
     float Map1(float input, float min1, float max1, float min2, float max2){

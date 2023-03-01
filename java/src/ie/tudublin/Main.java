@@ -41,18 +41,15 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		System.out.println("Hello world");
+		System.out.println("\n\n\n");
 		
 		Dog penny = new Dog();
-		penny.setName("Penny");
-		penny.speak();
-
-		PitchSpeller ps = new PitchSpeller();
-		System.out.println(ps.spell(330));
-		System.out.println(ps.spell(420));
-		System.out.println(ps.spell(1980));
+		//penny.setName("Penny");
+		//penny.speak();
 
 		audio2();
+
+
 	}
 	
 }
