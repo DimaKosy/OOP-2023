@@ -1,6 +1,5 @@
 package ie.tudublin;
 
-import com.jogamp.newt.event.KeyEvent;
 
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
@@ -9,7 +8,6 @@ import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import ddf.minim.analysis.FFT;
 import ddf.minim.ugens.Oscil;
-import ddf.minim.ugens.Waveform;
 import ddf.minim.ugens.Waves;
 import processing.core.PApplet;
 
@@ -22,7 +20,7 @@ public class Audio2 extends PApplet{
 
     AudioOutput out;
     Oscil wave;
-    float Freq = 0;
+    float Freq = 16.35f;
 
     FFT fft;
 
@@ -40,7 +38,7 @@ public class Audio2 extends PApplet{
         colorMode(HSB);
         m = new Minim(this);
 
-        switch(0){
+        switch(2){
             case 0:
                 Ai = m.getLineIn(Minim.MONO,width,44100,16);
                 Ab = Ai.mix;
@@ -56,11 +54,14 @@ public class Audio2 extends PApplet{
                 out = m.getLineOut();
                 wave = new Oscil( 440, 0.5f, Waves.SINE);
                 wave.patch( out );
+                
+                Ab = out.mix;
+                
             break;
 
         }
         
-
+        
         lerpedBuffer = new float [Ab.size()];
 
         fft = new FFT(width,44100);
@@ -71,12 +72,15 @@ public class Audio2 extends PApplet{
 
         ps = new PitchSpeller();
 		//System.out.println(ps.spell(17));
-		System.out.println(ps.spell(330));
+		System.out.println(ps.spell(16.35f));
 		System.out.println(ps.spell(420));
 		System.out.println(ps.spell(1980));
+        
+        //print(wave);
     }
 
     public void draw(){
+        
         noStroke();
         fill(0,0,0,255);
         rect(0, 0, width, height);
@@ -84,7 +88,7 @@ public class Audio2 extends PApplet{
         for(int i = 0; i < Ab.size(); i++){
             stroke(map(i,0,Ab.size(),0,256),255,255,100);
             lerpedBuffer[i] = lerp(lerpedBuffer[i],Ab.get(i), 0.1f);
-            line(i,halfH,i,halfH +height*abs(lerpedBuffer[i]));
+            line(i,halfH,i,halfH +halfH*abs(lerpedBuffer[i]));
         }
 
 
@@ -108,20 +112,29 @@ public class Audio2 extends PApplet{
             line(i,halfH,i,halfH - halfH/4f * abs(fftBuffer[i]));
         }
 
-        text(ps.spell(fft.indexToFreq(HighestIndex)),30,30);
+        text(ps.spell(Freq),30,30);
         //print(fft.indexToFreq(HighestIndex) + "\n");
+        
+        wave.setFrequency(Freq);
+        //println(Freq);
     }
 
     public void keyPressed()
     { 
-        switch(keyCode )
+        switch(key )
         {
-            case KeyEvent.VK_UP:
-                wave.setFrequency(++Freq);
+            case 'w':
+            Freq += 10f;
             break;
-            case KeyEvent.VK_DOWN:
-                wave.setFrequency(--Freq);
-            break;            
+            case 's':
+                Freq -= 10f;
+            break;        
+            case 'd':
+                Freq += 0.1f;
+            break;
+            case 'a':
+                Freq -= 0.1f;
+            break;    
             default: break; 
         }
     }

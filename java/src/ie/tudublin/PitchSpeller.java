@@ -30,7 +30,7 @@ public class PitchSpeller {
 
         FreqOut--;
         if(FreqOut < 0){
-            System.out.println(" " + FreqOut);
+            //System.out.println(" " + FreqOut);
             FreqOut++;
         }
         Diff = Math.abs(freq[FreqOut] - freq[(FreqOut+1)%freq.length]);
