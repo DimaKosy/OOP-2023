@@ -1,12 +1,16 @@
 package ie.tudublin;
 
-import javax.swing.plaf.basic.BasicComboBoxUI;
+import com.jogamp.newt.event.KeyEvent;
 
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
+import ddf.minim.AudioOutput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import ddf.minim.analysis.FFT;
+import ddf.minim.ugens.Oscil;
+import ddf.minim.ugens.Waveform;
+import ddf.minim.ugens.Waves;
 import processing.core.PApplet;
 
 public class Audio2 extends PApplet{
@@ -15,6 +19,10 @@ public class Audio2 extends PApplet{
     AudioInput Ai;
     AudioBuffer Ab;
     AudioPlayer Ap;
+
+    AudioOutput out;
+    Oscil wave;
+    float Freq = 0;
 
     FFT fft;
 
@@ -32,14 +40,24 @@ public class Audio2 extends PApplet{
         colorMode(HSB);
         m = new Minim(this);
 
-        if(false){
-            Ai = m.getLineIn(Minim.MONO,width,44100,16);
-            Ab = Ai.mix;
-        }
-        else{
-            Ap = m.loadFile("440.wav", 1024);
-            Ap.play();
-            Ab = Ap.mix;
+        switch(0){
+            case 0:
+                Ai = m.getLineIn(Minim.MONO,width,44100,16);
+                Ab = Ai.mix;
+            break;
+
+            case 1:
+                Ap = m.loadFile("440.wav", 1024);
+                Ap.play();
+                Ab = Ap.mix;
+            break;
+
+            case 2:
+                out = m.getLineOut();
+                wave = new Oscil( 440, 0.5f, Waves.SINE);
+                wave.patch( out );
+            break;
+
         }
         
 
@@ -92,6 +110,20 @@ public class Audio2 extends PApplet{
 
         text(ps.spell(fft.indexToFreq(HighestIndex)),30,30);
         //print(fft.indexToFreq(HighestIndex) + "\n");
+    }
+
+    public void keyPressed()
+    { 
+        switch(keyCode )
+        {
+            case KeyEvent.VK_UP:
+                wave.setFrequency(++Freq);
+            break;
+            case KeyEvent.VK_DOWN:
+                wave.setFrequency(--Freq);
+            break;            
+            default: break; 
+        }
     }
 
     float Map1(float input, float min1, float max1, float min2, float max2){
