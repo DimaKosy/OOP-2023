@@ -85,10 +85,10 @@ public class Audio2 extends PApplet{
         fill(0,0,0,255);
         rect(0, 0, width, height);
         
-        for(int i = 0; i < Ab.size(); i++){
+        for(int i = 0; i < Ab.size() - 1; i++){
             stroke(map(i,0,Ab.size(),0,256),255,255,100);
             lerpedBuffer[i] = lerp(lerpedBuffer[i],Ab.get(i), 0.1f);
-            line(i,halfH,i,halfH +halfH*abs(lerpedBuffer[i]));
+            line(i,halfH+halfH*abs(lerpedBuffer[i]),i + 1,halfH +halfH*abs(lerpedBuffer[i + 1]));
         }
 
 
