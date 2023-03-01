@@ -116,7 +116,7 @@ public class Audio2 extends PApplet{
         //print(fft.indexToFreq(HighestIndex) + "\n");
         
         wave.setFrequency(Freq);
-        //println(Freq);
+        println(Freq);
     }
 
     public void keyPressed()
