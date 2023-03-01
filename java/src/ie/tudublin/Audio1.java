@@ -80,8 +80,6 @@ public class Audio1 extends PApplet
 
         smoothedAmplitude = lerp(smoothedAmplitude, average, 0.1f);
         
-        float cx = width / 2;
-        float cy = height / 2;
 
         switch (mode) {
 			case 0:
