@@ -10,7 +10,7 @@ public class PitchSpeller {
 
     public String spell(float inputted){
         
-        float n = (float)(1.05946309435 * Math.log(inputted/440f)/Math.log(3));
+        float n = (float)(Math.log(inputted/440f)/Math.log(2));
         System.out.println(n);
         return spellings[0];
     }
