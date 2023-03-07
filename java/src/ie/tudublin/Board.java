@@ -4,8 +4,9 @@ import processing.core.PApplet;
 
 public class Board{
     
-    boolean [][] Cell;
-    private boolean [][] FutureCell;
+    Cells [][] cell;
+
+    private Cells [][] FutureCell;
     private PApplet papplet;
     private int size;
     private float cellsize = 5;
@@ -17,31 +18,42 @@ public class Board{
 
         this.cellsize = cellsize;
         
-        Cell = new boolean[size][size];
-        FutureCell = new boolean[size][size];
+        cell = new Cells[size][size];
+        for(int row = 0; row < size; row++){
+            for(int column = 0; column < size; column++){
+                cell[row][column] = new Cells();
+            }
+        }
+
+        FutureCell = new Cells[size][size];
+        for(int row = 0; row < size; row++){
+            for(int column = 0; column < size; column++){
+                FutureCell[row][column] = new Cells();
+            }
+        }
     }
 
-    public Board(PApplet papplet,int size, int cellsize, boolean [][] Cellstate){
+    public Board(PApplet papplet,int size, int cellsize, Cells [][] Cellstate){
         this.size = size;
         this.papplet = papplet;
 
         this.cellsize = cellsize;
         
-        Cell = new boolean[size][size];
+        cell = new Cells[size][size];
 
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                Cell[row][column] = Cellstate[row][column];
+                cell[row][column] = Cellstate[row][column];
             }
         }
 
-        FutureCell = new boolean[size][size];
+        FutureCell = new Cells[size][size];
     }
 
     public void Randomise(float Per){
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                Cell[row][column] = (papplet.random(0f,1f) <= Per);
+                cell[row][column].state = (papplet.random(0f,1f) <= Per);
             }
         }
     }
@@ -49,7 +61,7 @@ public class Board{
     public void Render(){
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                papplet.fill(0,0,255 * ((Cell[row][column])?(1):(0)));
+                papplet.fill(0,0,255 * ((cell[row][column].state)?(1):(0)));
 
                 papplet.rect(row*cellsize,column*cellsize,cellsize,cellsize);
             }
@@ -78,27 +90,36 @@ public class Board{
                         }
 
 
-                        if(Cell[x1][y1]){
-                            
+                        if(cell[x1][y1].state){
+                            FutureCell[row][column].R = cell[x1][y1].R;
+                            FutureCell[row][column].G = cell[x1][y1].A;
+                            FutureCell[row][column].B = cell[x1][y1].B;
+                            FutureCell[row][column].A = cell[x1][y1].A;
                             Count++;
                         }
                     }
                 }
+                   
 
                 if(Count > 3 || Count < 2){
-                    FutureCell[row][column] = false;
+                    FutureCell[row][column].state = false;
                     continue;
                 }
                 if(Count == 3){
-                    FutureCell[row][column] = true;
+                    FutureCell[row][column].state = true;
                     continue;
                 }
-                FutureCell[row][column] = Cell[row][column];
+                FutureCell[row][column].state = cell[row][column].state;
             }
         }
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                Cell[row][column] = FutureCell[row][column];
+                cell[row][column].state = FutureCell[row][column].state;
+
+                cell[row][column].R = FutureCell[row][column].R / Count;
+                cell[row][column].G = FutureCell[row][column].G / Count;
+                cell[row][column].B = FutureCell[row][column].B / Count;
+                cell[row][column].A = FutureCell[row][column].A / Count;
             }
         }
     }
