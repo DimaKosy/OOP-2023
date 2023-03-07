@@ -44,6 +44,11 @@ public class Board{
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
                 cell[row][column] = Cellstate[row][column];
+
+                cell[row][column].R = (int)(255 * papplet.random(0f,1f)); 
+                cell[row][column].G = (int)(255 * papplet.random(0f,1f));
+                cell[row][column].B = (int)(255 * papplet.random(0f,1f));
+                cell[row][column].A = (int)(255 * papplet.random(0f,1f));
             }
         }
 
@@ -61,7 +66,11 @@ public class Board{
     public void Render(){
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                papplet.fill(0,0,255 * ((cell[row][column].state)?(1):(0)));
+                if(!cell[row][column].state){
+                    continue;
+                }
+
+                papplet.fill(cell[row][column].R, cell[row][column].G, cell[row][column].B, cell[row][column].A);
 
                 papplet.rect(row*cellsize,column*cellsize,cellsize,cellsize);
             }
