@@ -3,8 +3,9 @@ package ie.tudublin;
 import processing.core.PApplet;
 
 public class Board{
-    boolean [][] Cell;
-    private boolean [][] FutureCell;
+    Cell [][] cells;
+
+    private Cell [][] FutureCell;
     private PApplet papplet;
     private int size;
     private float cellsize = 5;
@@ -16,31 +17,31 @@ public class Board{
 
         this.cellsize = cellsize;
         
-        Cell = new boolean[size][size];
-        FutureCell = new boolean[size][size];
+        cells = new Cell[size][size];
+        FutureCell = new Cell[size][size];
     }
 
-    public Board(PApplet papplet,int size, int cellsize, boolean [][] Cellstate){
+    public Board(PApplet papplet,int size, int cellsize, Cell [][] Cellstate){
         this.size = size;
         this.papplet = papplet;
 
         this.cellsize = cellsize;
         
-        Cell = new boolean[size][size];
+        cells = new Cell[size][size];
 
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                Cell[row][column] = Cellstate[row][column];
+                cells[row][column] = Cellstate[row][column];
             }
         }
 
-        FutureCell = new boolean[size][size];
+        FutureCell = new Cell[size][size];
     }
 
     public void Randomise(float Per){
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                Cell[row][column] = (papplet.random(0f,1f) <= Per);
+                cells[row][column].state = (papplet.random(0f,1f) <= Per);
             }
         }
     }
@@ -48,8 +49,12 @@ public class Board{
     public void Render(){
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                papplet.fill(0,0,255 * ((Cell[row][column])?(1):(0)));
 
+                if(cells[row][column].state == false){
+                    //papplet.noFill();
+                    continue;
+                }
+                papplet.fill(0,0,255);
                 papplet.rect(row*cellsize,column*cellsize,cellsize,cellsize);
             }
         }
@@ -77,7 +82,7 @@ public class Board{
                         }
 
 
-                        if(Cell[x1][y1]){
+                        if(cells[x1][y1].state){
                             
                             Count++;
                         }
@@ -85,19 +90,19 @@ public class Board{
                 }
 
                 if(Count > 3 || Count < 2){
-                    FutureCell[row][column] = false;
+                    FutureCell[row][column].state = false;
                     continue;
                 }
                 if(Count == 3){
-                    FutureCell[row][column] = true;
+                    FutureCell[row][column].state = true;
                     continue;
                 }
-                FutureCell[row][column] = Cell[row][column];
+                FutureCell[row][column] = cells[row][column];
             }
         }
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                Cell[row][column] = FutureCell[row][column];
+                cells[row][column] = FutureCell[row][column];
             }
         }
     }
