@@ -6,7 +6,7 @@ public class Life extends PApplet{
 
 	Board board, board1;
 	public void settings(){
-		size(500, 500);
+		size(1000, 500);
 	}
 
 	public void setup(){
@@ -14,9 +14,9 @@ public class Life extends PApplet{
 		background(0);
 		stroke(0,255,255);
 
-		frameRate(5);
+		frameRate(10);
 
-		board = new Board(this, 100,5);
+		board = new Board(this, 100,5, 2, 3, 5, 7,10);
 		board.Randomise(0.5f);
 
 		//strokeWeight(1);
@@ -24,9 +24,8 @@ public class Life extends PApplet{
 		noStroke();
 
 
-		//board1 = new Board(this, 100,20,board.Cell);
-		//board1.Simulate();
-		//board1.Update();
+		board1 = new Board(board);
+		board1.Simulate();
 	}
 
 	
@@ -39,17 +38,19 @@ public class Life extends PApplet{
 		//3 or 2 survive
 
 		background(0);
-
+		
+		noStroke();
 		board.Render();
 
-		//translate(500, 0);
-		//board1.Render();
+		translate(500, 0);
+		board1.Render();
 		//
-		//strokeWeight(3);
-		//stroke(120,255,255);
-		//line(0,0,0,height);
+		strokeWeight(3);
+		stroke(120,255,255);
+		line(0,0,0,height);
 
 		board.Simulate();
+		board1.Simulate();
 	}
 
 	public void mouseClicked(){
