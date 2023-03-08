@@ -1,6 +1,7 @@
 package ie.tudublin;
 
-public class Main{
+public class Main extends Thread{
+	static boolean Running[];
 
 	public static void helloProcessing(){
 		String[] a = {"MAIN"};
@@ -42,9 +43,22 @@ public class Main{
         processing.core.PApplet.runSketch( a, new Life());
     }
 	
-	public static void main(String[] args){
+	public void run(){
+		life();
+	}
+
+	public static void main(String[] args) throws InterruptedException {
 		System.out.println("Hello world");
 
-		life();
+		Thread t = new Thread(new Main());
+		Running = new boolean[1];
+		t.start();
+
+		while(Running[0] == true){
+			System.out.println("Living my life");
+		}
+
+		t.join();
+		System.out.println("Goodbye world");
 	}
 }

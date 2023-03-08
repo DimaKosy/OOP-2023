@@ -3,5 +3,5 @@ package ie.tudublin;
 public class Cells {
     int state;
     int Count;
-    float R,G,B,A;
+    float R,G,B,A,X,Y;
 }
