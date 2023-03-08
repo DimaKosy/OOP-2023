@@ -32,14 +32,17 @@ public class Board{
             for(int column = 0; column < size; column++){
                 cell[row][column] = new Cells();
 
-                cell[row][column].R = (int)papplet.map(row + column, 0, size + size, 0, 255); 
-                //cell[row][column].R = (int)papplet.random(0,256);
+                cell[row][column].R = papplet.map(row + column, 0, size + size, 0, 256); 
+                //cell[row][column].R = papplet.random(0,256);
                 
                 cell[row][column].G = 255;
                 cell[row][column].B = 255;
                 cell[row][column].A = 255;
             }
+            cell[row][0].state =1;
         }
+
+        cell[10][10].state =1;
 
         FutureCell = new Cells[size][size];
         for(int row = 0; row < size; row++){
@@ -85,7 +88,7 @@ public class Board{
     public void Randomise(float Per){
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                cell[row][column].state = (papplet.random(0f,1f) <= Per);
+                cell[row][column].state = papplet.round(papplet.random(0f,1f));
             }
         }
     }
@@ -93,7 +96,7 @@ public class Board{
     public void Render(){
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
-                if(!cell[row][column].state && !BackColor){
+                if(cell[row][column].state == 0 && !BackColor){
                     continue;
                 }
 
@@ -105,63 +108,70 @@ public class Board{
     }
 
     public void Simulate(){
-        int Count = 0;
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
                 
-                Count = 0;
+                cell[row][column].Count = 0;
 
                 for(int x1 = row - Search; x1 <= row + Search; x1++){
-                    if(x1 < 0 || x1 >= size){
-                        continue;
-                    }
+                    //if(x1 < 0 || x1 >= size){
+                    //    continue;
+                    //}
 
                     for(int y1 = column - Search; y1 <= column + Search; y1++){
-                        if(y1 < 0 || y1 >= size){
-                            continue;
-                        }
+                        //if(y1 < 0 || y1 >= size){
+                        //    continue;
+                        //}
 
                         if(y1 == column && x1 == row){
-                            FutureCell[row][column].R += cell[x1][y1].R;
-                            FutureCell[row][column].Count++;
+                            //FutureCell[row][column].R += cell[(x1 + size)%size][(y1 + size)%size].R;
+                            //FutureCell[row][column].Count++;
                             continue;
                         }
 
-                        if(cell[x1][y1].state){
-                            FutureCell[row][column].R += cell[x1][y1].R;
+                        if(cell[(x1 + size)%size][(y1 + size)%size].state == 1){
+
+                            //if(cell[row][column].R < 100){
+                            //    Count ++;
+                            //}
+
+                            FutureCell[row][column].R += cell[(x1 + size)%size][(y1 + size)%size].R;
                             FutureCell[row][column].Count++;
                             //FutureCell[row][column].G = cell[x1][y1].A;
                             //FutureCell[row][column].B = cell[x1][y1].B;
                             //FutureCell[row][column].A = cell[x1][y1].A;
-                            Count++;
+                            cell[row][column].Count++;
                         }
                     }
-                }
-
-                cell[row][column].R = FutureCell[row][column].R;
-                //cell[row][column].R /= (1 + (Search*2)) * (1 + (Search*2));//FutureCell[row][column].Count;
-                cell[row][column].R /= (FutureCell[row][column].Count > 1)?(FutureCell[row][column].Count+1):1;
-                //cell[row][column].R += 70;
-                cell[row][column].R %= 256;
+                } 
                 
-
-                if(Count >= BirthMin && Count <= BirthMax){
-                    FutureCell[row][column].state = true;
-                    continue;
+                if(cell[row][column].Count >= BirthMin && cell[row][column].Count <= BirthMax){
+                    FutureCell[row][column].state = 1;
+                    
                 }
-
-                if(Count > Max || Count < Min){
-                    FutureCell[row][column].state = false;
+                else if(cell[row][column].Count > Max || cell[row][column].Count < Min){
+                    FutureCell[row][column].state = 0;
                     //cell[row][column].R = 0;
-                    continue;
                 }
-
-                FutureCell[row][column].state = cell[row][column].state;
-                
+                else{
+                    FutureCell[row][column].state = cell[row][column].state;
+                }
             }
         }
         for(int row = 0; row < size; row++){
             for(int column = 0; column < size; column++){
+
+                if(FutureCell[row][column].state == 1){
+                    cell[row][column].R = FutureCell[row][column].R;
+                    //cell[row][column].R /= (1 + (Search*2)) * (1 + (Search*2));//FutureCell[row][column].Count;
+                    
+                    cell[row][column].R /= (FutureCell[row][column].Count);
+                    //papplet.print(cell[row][column].R + "   ");
+                    //cell[row][column].R += 10;
+                    cell[row][column].R %= 256;  
+                    //papplet.print(cell[row][column].R + "\n");             
+                }
+
                 cell[row][column].state = FutureCell[row][column].state;
             }
         }

@@ -1,7 +1,7 @@
 package ie.tudublin;
 
 public class Cells {
-    boolean state;
+    int state;
     int Count;
-    int R,G,B,A;
+    float R,G,B,A;
 }

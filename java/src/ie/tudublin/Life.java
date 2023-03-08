@@ -14,9 +14,11 @@ public class Life extends PApplet{
 		background(0);
 		stroke(0,255,255);
 
-		frameRate(10);
+		frameRate(20);
 
-		board = new Board(this, 100,5, 2, 3, 5, 7,10);
+		//board = new Board(this, 250,2, 2, 18,20,12,19);
+		//board = new Board(this, 250,2, 2, 12,18,10,16);
+		board = new Board(this, 100,5, 1, 2,3,3,3);
 		board.Randomise(0.5f);
 
 		//strokeWeight(1);
@@ -25,7 +27,6 @@ public class Life extends PApplet{
 
 
 		board1 = new Board(board);
-		board1.Simulate();
 	}
 
 	
