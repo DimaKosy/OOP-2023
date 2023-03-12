@@ -42,9 +42,14 @@ public class Main extends Thread{
 		String[] a = {"MAIN"};
         processing.core.PApplet.runSketch( a, new Life());
     }
+
+	public static void life3D(){
+		String[] a = {"MAIN"};
+        processing.core.PApplet.runSketch( a, new Life3D());
+    }
 	
 	public void run(){
-		life();
+		life3D();
 	}
 
 	public static void main(String[] args) throws InterruptedException {
