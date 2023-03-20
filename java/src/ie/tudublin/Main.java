@@ -38,6 +38,18 @@ public class Main
 		String[] a = {"MAIN"};
         processing.core.PApplet.runSketch( a, new Audio2());
     }
+
+	public static void audio3()
+	{
+		String[] a = {"MAIN"};
+        processing.core.PApplet.runSketch( a, new Audio3());
+    }
+
+	public static void life()
+	{
+		String[] a = {"MAIN"};
+        processing.core.PApplet.runSketch( a, new Life());
+    }
 	
 	public static void main(String[] args)
 	{
@@ -47,7 +59,11 @@ public class Main
 		penny.setName("Penny");
 		penny.speak();
 
+<<<<<<< HEAD
 		audio1();
+=======
+		life();
+>>>>>>> 3ab2e39eb0964ed46d390a9d82d8b818f02bedb9
 	}
 	
 }
