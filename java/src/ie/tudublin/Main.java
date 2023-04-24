@@ -54,12 +54,13 @@ public class Main
 	public static void yasc()
 	{
 		String[] a = {"MAIN"};
-        processing.core.PApplet.runSketch( a, new YASC());
+        processing.core.PApplet.runSketch( a, new LyricsWave3());
     }
 	
 	public static void main(String[] args)
 	{
 		yasc();
+
 	}
 	
 }
